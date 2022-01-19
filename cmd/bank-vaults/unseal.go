@@ -15,6 +15,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -66,6 +67,10 @@ from one of the followings:
 		unsealConfig.raftLeaderAddress = c.GetString(cfgRaftLeaderAddress)
 		unsealConfig.raftSecondary = c.GetBool(cfgRaftSecondary)
 		unsealConfig.raftHAStorage = c.GetBool(cfgRaftHAStorage)
+
+		fmt.Println("cfgStoreRootToken: ", c.GetBool(cfgStoreRootToken))
+		fmt.Println("cfgPreFlightChecks: ", c.GetBool(cfgPreFlightChecks))
+		os.Exit(1)
 
 		store, err := kvStoreForConfig(c)
 		if err != nil {
