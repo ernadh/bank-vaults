@@ -44,6 +44,7 @@ func vaultConfigForConfig(c *viper.Viper) internalVault.Config {
 
 		InitRootToken:  c.GetString(cfgInitRootToken),
 		StoreRootToken: c.GetBool(cfgStoreRootToken),
+		//StoreRootToken: false,
 
 		PreFlightChecks: c.GetBool(cfgPreFlightChecks),
 	}

@@ -102,6 +102,7 @@ var configureCmd = &cobra.Command{
 		for config := range configurations {
 
 			logrus.Infoln("applying config file :", config.ConfigFileUsed())
+			config.Debug()
 
 			func() {
 				for {

@@ -1318,6 +1318,16 @@ func statefulSetForVault(v *vaultv1alpha1.Vault, externalSecretsToWatchItems []c
 
 	_, containerPorts := getServicePorts(v)
 
+	for nana, vallue := range v.Spec.UnsealConfig.ToArgs(v) {
+		fmt.Println(nana, vallue)
+	}
+
+	bits := v.Spec.UnsealConfig.Options.ToArgs()
+	merged := append(v.Spec.UnsealConfig.Options.ToArgs(), v.Spec.UnsealConfig.ToArgs(v)...)
+
+	fmt.Printf("%s %+v", "BITS", bits)
+	fmt.Printf("%s %+v", "MERGED", merged)
+
 	containers := withVeleroContainer(v, withStatsDContainer(v, withAuditLogContainer(v, []corev1.Container{
 		{
 			Image:           v.Spec.GetVaultImage(),
@@ -1366,7 +1376,8 @@ func statefulSetForVault(v *vaultv1alpha1.Vault, externalSecretsToWatchItems []c
 			ImagePullPolicy: corev1.PullIfNotPresent,
 			Name:            "bank-vaults",
 			Command:         unsealCommand,
-			Args:            append(v.Spec.UnsealConfig.Options.ToArgs(), v.Spec.UnsealConfig.ToArgs(v)...),
+			// TODO: Echo this sop that it's vibisble what is in this thing
+			Args: append(v.Spec.UnsealConfig.Options.ToArgs(), v.Spec.UnsealConfig.ToArgs(v)...),
 			Env: withSidecarEnv(v, withTLSEnv(v, true, withCredentialsEnv(v, withCommonEnv(v, []corev1.EnvVar{
 				{
 					Name: "POD_NAME",

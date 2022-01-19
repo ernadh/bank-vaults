@@ -15,6 +15,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -56,10 +57,14 @@ from one of the followings:
 - Alibaba KMS (backed by OSS)
 - Kubernetes Secrets (should be used only for development purposes)`,
 	Run: func(cmd *cobra.Command, args []string) {
+		c.Debug()
+		fmt.Println("cfgStoreRootToken: ", c.GetBool(cfgStoreRootToken))
+		fmt.Println("cfgPreFlightChecks: ", c.GetBool(cfgPreFlightChecks))
 		var unsealConfig unsealCfg
 
 		unsealConfig.unsealPeriod = c.GetDuration(cfgUnsealPeriod)
 		unsealConfig.proceedInit = c.GetBool(cfgInit)
+		logrus.Infof("Unseal config", unsealConfig)
 		unsealConfig.runOnce = c.GetBool(cfgOnce)
 		unsealConfig.auto = c.GetBool(cfgAuto)
 		unsealConfig.raft = c.GetBool(cfgRaft)
@@ -199,6 +204,7 @@ func init() {
 	configBoolVar(unsealCmd, cfgRaftHAStorage, false, "Join leader vault instance in raft HA storage mode")
 	configStringVar(unsealCmd, cfgInitRootToken, "", "Root token for the new vault cluster (only if -init=true)")
 	configBoolVar(unsealCmd, cfgStoreRootToken, true, "Should the root token be stored in the key store (only if -init=true)")
+	//configBoolVar(unsealCmd, cfgStoreRootToken, false, "Should the root token be stored in the key store (only if -init=true)")
 	configBoolVar(unsealCmd, cfgPreFlightChecks, true, "should the key store be tested first to validate access rights")
 	configBoolVar(unsealCmd, cfgAuto, false, "Run in auto-unseal mode")
 

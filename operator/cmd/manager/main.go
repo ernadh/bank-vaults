@@ -120,6 +120,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	log.Info("ERNAD starting cmd")
 	log.Info("Starting the Cmd.")
 
 	// Start the Cmd

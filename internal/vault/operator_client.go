@@ -256,6 +256,8 @@ func (v *vault) Init() error {
 
 	logrus.Info("initializing vault")
 
+	fmt.Printf("%+v\n", v.config)
+
 	// test backend first
 	if v.config.PreFlightChecks {
 		tester := kvTester{Service: v.keyStore}
@@ -359,6 +361,8 @@ func (v *vault) Init() error {
 		rootToken = v.config.InitRootToken
 	}
 
+	logrus.Info("THis is Ernad")
+	logrus.Info(v.config.StoreRootToken)
 	if v.config.StoreRootToken {
 		rootTokenKey := v.rootTokenKey()
 		if err = v.keyStoreSet(rootTokenKey, []byte(resp.RootToken)); err != nil {
@@ -1142,6 +1146,8 @@ func (v *vault) configureSecretEngines(config *viper.Viper) error {
 				Local:       local,
 				SealWrap:    sealWrap,
 			}
+			logrus.Debug("ERNAD DEBUG")
+			logrus.Info("ERNAD INFO")
 			logrus.Infof("mounting secret engine with input: %#v", input)
 			err = v.cl.Sys().Mount(path, &input)
 			if err != nil {
