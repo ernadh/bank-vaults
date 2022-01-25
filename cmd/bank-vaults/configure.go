@@ -16,6 +16,7 @@ package main
 
 import (
 	"io/ioutil"
+
 	"os"
 	"path/filepath"
 	"strings"
@@ -146,6 +147,7 @@ var configureCmd = &cobra.Command{
 				}
 			}()
 		}
+
 	},
 }
 
